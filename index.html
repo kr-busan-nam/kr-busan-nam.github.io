@@ -284,6 +284,42 @@ body { padding-top: var(--cg-strip-h); }
 .cg-colophon-note { margin: 4px 0 0; color: #9a9aa8; }
 @media (max-width: 640px) { .cg-strip-label { display: none; } }
 @media (prefers-reduced-motion: reduce) { .cg-skip { transition: none; } }
+
+/* ---- Mobile reading view (touch / small screens) ------------------------------------- */
+/* The immersive per-구 template is desktop-only. On touch devices and narrow screens the
+   .cg-read view is shown instead — it uses only safe, high-contrast CSS so text can never
+   go invisible on iOS Safari (no background-clip:text, backdrop-filter, 100vh, :hover-gated
+   reveals, or mix-blend-mode). Fully namespaced + generator-controlled. */
+.cg-read { display: none; }
+@media (hover: none) and (pointer: coarse), (max-width: 768px) {
+  /* Neutralise immersive templates that lock scrolling / lock the viewport on <body>. */
+  html, body { overflow-x: hidden !important; overflow-y: auto !important; height: auto !important;
+    min-height: 0 !important; position: static !important; touch-action: auto !important; background: #ffffff !important; }
+  .cg-immersive { display: none !important; }
+  .cg-read { display: block; }
+}
+.cg-read { max-width: 720px; margin: 0 auto; padding: 20px 18px 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  color: #17171f; background: #ffffff; line-height: 1.75; -webkit-text-size-adjust: 100%; }
+.cg-read * { max-width: 100%; box-sizing: border-box; }
+.cg-read-head { padding: 8px 0 16px; border-bottom: 3px solid var(--cg-ra, #2d5bff); margin-bottom: 20px; }
+.cg-read-eyebrow { margin: 0 0 4px; color: var(--cg-rd, #333); font-weight: 700; font-size: 15px; letter-spacing: .02em; }
+.cg-read-head h1 { margin: 0; font-size: clamp(30px, 8vw, 40px); line-height: 1.15; color: #14141c; font-weight: 800; }
+.cg-read h2 { font-size: 20px; margin: 30px 0 10px; padding-left: 11px; color: #14141c; font-weight: 700;
+  border-left: 5px solid var(--cg-ra, #2d5bff); }
+.cg-read p { margin: 0 0 12px; font-size: 17px; color: #23232d; }
+.cg-read section { margin: 0; }
+.cg-read ul { margin: 8px 0 0; padding-left: 20px; }
+.cg-read li { margin: 8px 0; font-size: 16px; color: #23232d; }
+.cg-read li strong { color: #111119; font-weight: 700; }
+.cg-read .facts, .cg-read .symbols { list-style: none; padding: 14px 16px; margin: 8px 0 0;
+  background: #f5f6fa; border: 1px solid #e6e8f0; border-radius: 12px; }
+.cg-read .faq details { border: 1px solid #e6e8f0; border-radius: 10px; padding: 10px 14px; margin: 8px 0; background: #fbfbfd; }
+.cg-read .faq summary { cursor: pointer; font-weight: 700; font-size: 16px; color: #14141c; }
+.cg-read .faq details p { margin: 8px 0 2px; color: #44454f; }
+.cg-read a { color: #1a46d8; word-break: break-word; }
+.cg-read .sources { font-size: 14px; color: #55565f; }
+.cg-read .sources a { color: #3a5bd0; }
 </style>
 </head>
 <body>
@@ -292,129 +328,12 @@ body { padding-top: var(--cg-strip-h); }
     <span class="cg-ad">AD</span><span class="cg-strip-label">후원 파트너</span><span class="cg-strip-list"><a class="cg-strip-item" href="https://ikoffices.com" rel="sponsored noopener" target="_blank">일광오피스</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://mobidicsaju.com" rel="sponsored noopener" target="_blank">모비딕 사주</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://www.foodskorea.com/" rel="sponsored noopener" target="_blank">전국팔도 식품도감</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://myflowmakers.com" rel="sponsored noopener" target="_blank">마이플로우메이커스</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://yeonlijispace.com" rel="sponsored noopener" target="_blank">연리지 인테리어</a><span class="cg-strip-dot" aria-hidden="true">·</span><a class="cg-strip-item" href="https://yeonliji.io" rel="sponsored noopener" target="_blank">주식회사 연리지</a><span class="cg-strip-dot" aria-hidden="true">·</span><span class="cg-strip-item cg-strip-text">세무·법률 자문</span></span>
   </aside>
   <div id="cg-main" tabindex="-1"></div>
+  <div class="cg-immersive">
 <!-- 부산 남구 전용 템플릿 — "1인칭 걷기: 오륙도로 향하는 발걸음"
      휠/스크롤을 발걸음으로 삼아 Z축으로 앞으로 걸어 들어가는 시점 이동.
      유엔기념공원의 고요한 평화와 오륙도·이기대 해안 절벽의 감성을,
      원근(perspective) 복도를 따라 다가오고 멀어지는 카드로 표현합니다.
-           <section id="intro">
-        <h2>지역 소개</h2>
-        <p>부산 남구는 오륙도가 바다 위에 우뚝 솟은 부산의 동남단 해안 자치구로, 국립해양조사원이 이곳 오륙도를 기준으로 동해와 남해를 가르는 상징적 경계를 이룹니다. 6·25전쟁에 참전해 산화한 세계 각국 유엔군이 잠든 세계 유일의 유엔기념공원(재한유엔기념공원)이 대연동에 자리해 &#x27;UN평화문화특구&#x27;로 지정된 평화의 도시이기도 합니다. 이기대와 신선대로 이어지는 해안 절벽과 파식대지가 갈맷길·해파랑길의 출발 구간을 이루어 걷기 여행의 명소로 사랑받습니다. 문현동 일대에는 부산국제금융센터(BIFC)와 문현금융단지가 들어서 동남권 해양·파생 금융의 중심축을 담당합니다. 경성대·부경대·동명대가 밀집한 대학가와 감만·신선대 컨테이너 부두가 공존하여 젊음과 항만 물류가 어우러진 독특한 도시색을 지닙니다. 바다·평화·금융·청년 문화가 한데 모인 부산 남구는 자연 경관과 도시 기능이 조화를 이룬 지역입니다.</p>
-      </section>
-      <section id="facts">
-        <h2>주요 통계</h2>
-        <ul class="facts">
-          <li>인구: 약 254,498명 (2024)</li>
-          <li>면적: 26.81 km²</li>
-          <li>신설: 1975-10-01</li>
-        </ul>
-      </section>
-      <section id="history">
-        <h2>역사</h2>
-        <p>남구 지역은 조선시대 동래부 관할의 해안 마을로, 감만동에는 오랑캐를 이긴다는 뜻의 수군진 감만포가 있었고 우암동은 큰 바위가 소 모양을 닮았다 하여 우암포로 불렸습니다. 대연동의 옛 이름 &#x27;못골&#x27;은 못이 있는 골짜기라는 뜻이며, 문현동은 순우리말 지명 &#x27;지게골&#x27;에서 유래했다고 전합니다. 일제강점기인 1936년 용주면과 남면 일부가 부산부에 편입되며 대연·용호·우암·감만동이 부산진출장소 소속이 되었습니다. 1975년 10월 1일 부산진구 대연출장소와 문현동, 동래구 수영출장소 등을 관할로 하여 남구가 정식으로 설치되었습니다. 1995년 3월 1일에는 수영구가 분리되어 나가면서 오늘날의 행정구역 골격이 갖추어졌습니다. 이후 유엔기념공원과 오륙도를 축으로 한 평화·관광 도시, 그리고 문현금융단지를 중심으로 한 금융 도시로 정체성을 다져 왔습니다.</p>
-      </section>
-      <section id="geography">
-        <h2>지리·자연환경</h2>
-        <p>남구는 부산의 동남부 해안에 자리하여 동쪽과 남쪽이 바다에 면하고, 오륙도가 놓인 지점에서 동해와 남해가 만납니다. 용호동 남단에는 장자산·백운포 일대에서 이어지는 이기대 해안이 있어 파도와 바람에 깎인 해식애와 파식대지가 국가지질공원으로 지정될 만큼 뛰어난 경관을 이룹니다. 용당동 앞바다에는 신선이 노닐었다는 전설의 신선대가 솟아 있고, 그 아래로 신선대부두가 펼쳐집니다. 구의 서편 문현동·감만동 일대는 낮은 구릉과 매립지가 이어져 항만과 시가지가 발달했으며, 용호만·용당만 등 만입 지형이 곳곳에 형성되어 있습니다. 해양성 기후의 영향으로 겨울에도 비교적 온화하며, 황령산 자락이 구의 북서쪽 경계를 이룹니다. 이처럼 바위섬·해안 절벽·만·부두가 촘촘히 맞닿은 해양 지형이 남구를 규정하는 대표적 특징입니다.</p>
-      </section>
-      <section id="characteristics">
-        <h2>지역 특징</h2>
-        <p>2024년 말 기준 남구의 인구는 약 25만 명으로, 면적 26.8㎢에 17개 행정동과 6개 법정동을 두고 있습니다. 문현동 문현금융단지에는 부산국제금융센터(BIFC)와 한국은행 부산본부, 부산은행 본점, 기술보증기금 등이 집적하여 부산이 지향하는 해양·파생 금융 중심지의 핵심을 이룹니다. 감만부두와 신선대부두는 세계적 규모의 컨테이너 물동량을 처리하는 항만 산업지대로, 물류·해운 관련 산업이 밀집해 있습니다. 경성대·부경대·동명대가 자리한 대연·용당 일대는 원룸촌과 상권이 발달한 활기찬 대학 문화 거리를 형성합니다. 또한 유엔기념공원을 중심으로 한 &#x27;UN평화문화특구&#x27;가 지정되어 평화·추모·문화 관광이 지역의 중요한 정체성으로 자리 잡았습니다. 금융·항만·대학·평화 관광이 한 구 안에 공존하는 다면적 도시 구조가 남구의 성격을 결정짓습니다.</p>
-      </section>
-      <section id="landmarks">
-        <h2>대표 명소</h2>
-        <ul>
-          <li><strong>오륙도</strong> — 밀물과 썰물에 따라 다섯 개로도 여섯 개로도 보인다는 남구의 대표 명승으로, 국립해양조사원이 이곳을 동해와 남해의 경계로 삼습니다. 승두·수리·송곳·굴·등대섬 등으로 이루어져 있으며 오륙도 스카이워크가 함께 자리합니다.</li>
-          <li><strong>유엔기념공원(재한유엔기념공원)</strong> — 6·25전쟁에서 세계 평화를 위해 산화한 유엔군 전몰장병이 잠든 세계 유일의 유엔군 묘지입니다. 21개 참전국 조각가들이 제작한 국제 조각 작품이 전시된 유엔조각공원이 인접해 있습니다.</li>
-          <li><strong>이기대 해안산책로</strong> — 동생말에서 오륙도까지 약 4.6km에 걸쳐 해안 절벽을 따라 구름다리와 데크로 이어진 산책로로, 갈맷길과 해파랑길의 인기 구간입니다. 파식대지와 해식애가 어우러진 국가지질공원 명소입니다.</li>
-          <li><strong>신선대</strong> — 용당동 앞바다에 솟은 명승으로, 신선이 내려와 노닐었다는 전설이 전해 옵니다. 정상에서 부산항과 오륙도, 신선대부두를 한눈에 조망할 수 있습니다.</li>
-          <li><strong>부산국제금융센터(BIFC)</strong> — 문현금융단지의 랜드마크 마천루로 2014년 개장한 지상 63층 초고층 빌딩입니다. 한국거래소, 한국예탁결제원 등 금융 공공기관이 입주한 동남권 금융 중심의 상징입니다.</li>
-        </ul>
-      </section>
-      <section id="heritage">
-        <h2>문화유산·문화시설</h2>
-        <ul>
-          <li><strong>부산광역시립박물관</strong> — 대연동 유엔평화문화특구 일원에 자리한 부산의 대표 종합 박물관으로, 부산과 동래 지역의 선사시대부터 근현대까지의 역사·문화 유물을 상설 전시합니다.</li>
-          <li><strong>국립일제강제동원역사관</strong> — 부산항이 강제동원의 주요 출발지였던 역사성을 반영해 대연동에 건립된 국립 역사관으로, 일제강점기 강제동원의 실상을 조사·전시합니다.</li>
-          <li><strong>유엔평화기념관</strong> — 6·25전쟁과 유엔군의 참전, 전후 평화 유지 활동을 기리는 기념관으로, 유엔기념공원과 연계해 평화·추모 교육의 장으로 운영됩니다.</li>
-          <li><strong>문화골목</strong> — 대연동 골목을 문화 공간으로 재생한 복합 문화 명소로, 소극장·갤러리·공연 무대가 어우러져 지역 축제와 예술 행사가 열립니다.</li>
-          <li><strong>오륙도 축제·이기대 달맞이축제</strong> — 남구를 대표하는 지역 축제로, 오륙도와 이기대의 빼어난 해안 경관을 배경으로 봄과 보름에 걸쳐 다양한 문화·공연 행사가 펼쳐집니다.</li>
-        </ul>
-      </section>
-      <section id="nature">
-        <h2>자연·휴식</h2>
-        <ul>
-          <li><strong>이기대 도시자연공원</strong> — 용호동 해안을 따라 조성된 자연공원으로, 해안 절벽과 파식대지, 구름다리를 걸으며 남해 바다를 감상할 수 있는 부산의 대표 걷기 명소입니다.</li>
-          <li><strong>신선대 유원지</strong> — 용당동 신선대 일대의 녹지 유원지로, 산책로와 전망 공간을 갖춰 부산항과 오륙도를 조망하며 휴식하기 좋은 곳입니다.</li>
-          <li><strong>용호별빛공원</strong> — 옛 용호만 매립지를 활용해 조성한 해안 공원으로, 야경과 산책로가 어우러져 주민들의 저녁 휴식 공간으로 사랑받습니다.</li>
-          <li><strong>황령산 자락 산책로</strong> — 구의 북서쪽 경계를 이루는 황령산 기슭으로 이어지는 산길로, 도심에서 가까우면서도 숲과 조망을 함께 즐길 수 있는 등산·산책 코스입니다.</li>
-          <li><strong>오륙도 해맞이공원</strong> — 오륙도 스카이워크와 이어지는 해안 전망 공원으로, 동해와 남해가 만나는 지점에서 일출과 탁 트인 바다 절경을 감상할 수 있습니다.</li>
-        </ul>
-      </section>
-      <section id="transport">
-        <h2>교통</h2>
-        <p>남구의 대중교통 중심축은 부산 도시철도 2호선으로, 문현역·지게골역·못골역·대연역·경성대·부경대역·부산은행역·국제금융센터·부산은행역이 구를 동서로 관통합니다. 대연역과 경성대·부경대역 일대는 대학가·상권과 맞물려 승객이 가장 붐비는 구간입니다. 문현금융단지에는 국제금융센터·부산은행역이 자리해 금융기관 통근 수요를 뒷받침합니다. 도로 교통으로는 황령산터널과 광안대로, 부산항대교가 인접해 도심·해운대·강서 방면 접근성이 좋으며, 감만·신선대부두로 이어지는 항만 배후도로가 발달해 있습니다. 오륙도·이기대 방면으로는 용호동을 거치는 시내버스 노선이 촘촘히 운행되어 관광객 접근을 돕습니다. 항만 물류 차량과 대학가 통학, 금융단지 통근 수요가 뒤섞인 다층적 교통 흐름이 남구의 특징입니다.</p>
-      </section>
-      <section id="symbols">
-        <h2>지역 상징</h2>
-        <ul class="symbols">
-          <li>구화(꽃): 목련</li>
-          <li>구목(나무): 은행나무</li>
-          <li>구조(새): 비둘기</li>
-        </ul>
-      </section>
-      <section id="faq">
-        <h2>자주 묻는 질문</h2>
-        <div class="faq">
-          <details>
-            <summary>부산 남구청은 어디에 있나요?</summary>
-            <p>부산광역시 남구 못골로 19(대연동)에 있으며, 도시철도 2호선 못골역 인근에 자리합니다.</p>
-          </details>
-          <details>
-            <summary>오륙도가 동해와 남해의 경계라는 게 사실인가요?</summary>
-            <p>네, 국립해양조사원은 남구 앞바다의 오륙도를 기준으로 우리나라 바다를 동해와 남해로 구분합니다.</p>
-          </details>
-          <details>
-            <summary>유엔기념공원은 어떤 곳인가요?</summary>
-            <p>6·25전쟁에서 산화한 유엔군 전몰장병이 잠든 세계 유일의 유엔군 묘지로, 대연동에 있으며 UN평화문화특구의 핵심 시설입니다.</p>
-          </details>
-          <details>
-            <summary>이기대 해안산책로는 얼마나 긴가요?</summary>
-            <p>동생말에서 오륙도 방면까지 약 4.6km에 이르며, 해안 절벽을 따라 구름다리와 데크로 이어진 갈맷길·해파랑길의 인기 구간입니다.</p>
-          </details>
-          <details>
-            <summary>남구에는 어떤 대학이 있나요?</summary>
-            <p>경성대학교, 부경대학교, 동명대학교가 대연·용당 일대에 자리해 활기찬 대학 문화 거리를 이룹니다.</p>
-          </details>
-          <details>
-            <summary>문현금융단지는 무엇인가요?</summary>
-            <p>문현동 일대에 조성된 동남권 금융 중심지로, 부산국제금융센터(BIFC)를 비롯해 한국은행 부산본부, 부산은행 본점 등이 입주해 있습니다.</p>
-          </details>
-        </div>
-      </section>
-      <section id="links">
-        <h2>공식 링크</h2>
-        <ul>
-          <li><a href="https://www.bsnamgu.go.kr/" rel="noopener">부산광역시 남구청 공식 홈페이지</a></li>
-          <li><a href="https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000101007000000" rel="noopener">부산 남구 UN평화문화특구 안내</a></li>
-        </ul>
-      </section>
-      <section id="github">
-        <h2>GitHub</h2>
-        <ul>
-          <li><a href="https://github.com/kr-busan-nam" rel="noopener">GitHub 조직: kr-busan-nam</a></li>
-          <li><a href="https://github.com/kr-busan-nam/kr-busan-nam.github.io" rel="noopener">이 사이트 저장소</a></li>
-        </ul>
-      </section>
-      <section id="sources">
-        <h2>출처</h2>
-        <ul class="sources">
-          <li><a href="https://ko.wikipedia.org/wiki/%EB%82%A8%EA%B5%AC_(%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C)" rel="noopener">남구 (부산광역시) - 위키백과</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.bsnamgu.go.kr/" rel="noopener">부산 남구청 공식 홈페이지</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000101007000000" rel="noopener">부산 남구청 - UN평화문화특구 안내</a> (조회 2026-07-08)</li>
-          <li><a href="https://busan.grandculture.net/Contents/Index?contents_id=GC04214625" rel="noopener">문현 금융 단지 - 부산역사문화대전</a> (조회 2026-07-08)</li>
-          <li><a href="https://www.busan.go.kr/geopark/igidae" rel="noopener">이기대 - 부산지오파크</a> (조회 2026-07-08)</li>
-        </ul>
-      </section>로 9섹션 실제 텍스트가 DOM에 그대로 들어가 크롤링 가능(SEO-safe),
+     콘텐츠로 9섹션 실제 텍스트가 DOM에 그대로 들어가 크롤링 가능(SEO-safe),
      그 위에 3D 걷기·HUD가 progressive-enhancement로 얹힘.
      JS가 꺼지면 .walk 클래스가 붙지 않아 평범한 세로 스크롤로 온전히 읽힙니다. -->
 <canvas id="nam-horizon" aria-hidden="true"></canvas>
@@ -946,6 +865,134 @@ body { padding-top: var(--cg-strip-h); }
   requestAnimationFrame(loop);
 })();
 </script>
+  </div>
+  <main class="cg-read" id="cg-read" role="main" lang="ko" style="--cg-ra:#452bab;--cg-ra2:#ad39d0;--cg-rd:#261957">
+    <header class="cg-read-head">
+      <p class="cg-read-eyebrow">부산광역시</p>
+      <h1>남구</h1>
+    </header>
+    <div class="cg-read-body">
+      <section id="r-intro">
+        <h2>지역 소개</h2>
+        <p>부산 남구는 오륙도가 바다 위에 우뚝 솟은 부산의 동남단 해안 자치구로, 국립해양조사원이 이곳 오륙도를 기준으로 동해와 남해를 가르는 상징적 경계를 이룹니다. 6·25전쟁에 참전해 산화한 세계 각국 유엔군이 잠든 세계 유일의 유엔기념공원(재한유엔기념공원)이 대연동에 자리해 &#x27;UN평화문화특구&#x27;로 지정된 평화의 도시이기도 합니다. 이기대와 신선대로 이어지는 해안 절벽과 파식대지가 갈맷길·해파랑길의 출발 구간을 이루어 걷기 여행의 명소로 사랑받습니다. 문현동 일대에는 부산국제금융센터(BIFC)와 문현금융단지가 들어서 동남권 해양·파생 금융의 중심축을 담당합니다. 경성대·부경대·동명대가 밀집한 대학가와 감만·신선대 컨테이너 부두가 공존하여 젊음과 항만 물류가 어우러진 독특한 도시색을 지닙니다. 바다·평화·금융·청년 문화가 한데 모인 부산 남구는 자연 경관과 도시 기능이 조화를 이룬 지역입니다.</p>
+      </section>
+      <section id="r-facts">
+        <h2>주요 통계</h2>
+        <ul class="facts">
+          <li>인구: 약 254,498명 (2024)</li>
+          <li>면적: 26.81 km²</li>
+          <li>신설: 1975-10-01</li>
+        </ul>
+      </section>
+      <section id="r-history">
+        <h2>역사</h2>
+        <p>남구 지역은 조선시대 동래부 관할의 해안 마을로, 감만동에는 오랑캐를 이긴다는 뜻의 수군진 감만포가 있었고 우암동은 큰 바위가 소 모양을 닮았다 하여 우암포로 불렸습니다. 대연동의 옛 이름 &#x27;못골&#x27;은 못이 있는 골짜기라는 뜻이며, 문현동은 순우리말 지명 &#x27;지게골&#x27;에서 유래했다고 전합니다. 일제강점기인 1936년 용주면과 남면 일부가 부산부에 편입되며 대연·용호·우암·감만동이 부산진출장소 소속이 되었습니다. 1975년 10월 1일 부산진구 대연출장소와 문현동, 동래구 수영출장소 등을 관할로 하여 남구가 정식으로 설치되었습니다. 1995년 3월 1일에는 수영구가 분리되어 나가면서 오늘날의 행정구역 골격이 갖추어졌습니다. 이후 유엔기념공원과 오륙도를 축으로 한 평화·관광 도시, 그리고 문현금융단지를 중심으로 한 금융 도시로 정체성을 다져 왔습니다.</p>
+      </section>
+      <section id="r-geography">
+        <h2>지리·자연환경</h2>
+        <p>남구는 부산의 동남부 해안에 자리하여 동쪽과 남쪽이 바다에 면하고, 오륙도가 놓인 지점에서 동해와 남해가 만납니다. 용호동 남단에는 장자산·백운포 일대에서 이어지는 이기대 해안이 있어 파도와 바람에 깎인 해식애와 파식대지가 국가지질공원으로 지정될 만큼 뛰어난 경관을 이룹니다. 용당동 앞바다에는 신선이 노닐었다는 전설의 신선대가 솟아 있고, 그 아래로 신선대부두가 펼쳐집니다. 구의 서편 문현동·감만동 일대는 낮은 구릉과 매립지가 이어져 항만과 시가지가 발달했으며, 용호만·용당만 등 만입 지형이 곳곳에 형성되어 있습니다. 해양성 기후의 영향으로 겨울에도 비교적 온화하며, 황령산 자락이 구의 북서쪽 경계를 이룹니다. 이처럼 바위섬·해안 절벽·만·부두가 촘촘히 맞닿은 해양 지형이 남구를 규정하는 대표적 특징입니다.</p>
+      </section>
+      <section id="r-characteristics">
+        <h2>지역 특징</h2>
+        <p>2024년 말 기준 남구의 인구는 약 25만 명으로, 면적 26.8㎢에 17개 행정동과 6개 법정동을 두고 있습니다. 문현동 문현금융단지에는 부산국제금융센터(BIFC)와 한국은행 부산본부, 부산은행 본점, 기술보증기금 등이 집적하여 부산이 지향하는 해양·파생 금융 중심지의 핵심을 이룹니다. 감만부두와 신선대부두는 세계적 규모의 컨테이너 물동량을 처리하는 항만 산업지대로, 물류·해운 관련 산업이 밀집해 있습니다. 경성대·부경대·동명대가 자리한 대연·용당 일대는 원룸촌과 상권이 발달한 활기찬 대학 문화 거리를 형성합니다. 또한 유엔기념공원을 중심으로 한 &#x27;UN평화문화특구&#x27;가 지정되어 평화·추모·문화 관광이 지역의 중요한 정체성으로 자리 잡았습니다. 금융·항만·대학·평화 관광이 한 구 안에 공존하는 다면적 도시 구조가 남구의 성격을 결정짓습니다.</p>
+      </section>
+      <section id="r-landmarks">
+        <h2>대표 명소</h2>
+        <ul>
+          <li><strong>오륙도</strong> — 밀물과 썰물에 따라 다섯 개로도 여섯 개로도 보인다는 남구의 대표 명승으로, 국립해양조사원이 이곳을 동해와 남해의 경계로 삼습니다. 승두·수리·송곳·굴·등대섬 등으로 이루어져 있으며 오륙도 스카이워크가 함께 자리합니다.</li>
+          <li><strong>유엔기념공원(재한유엔기념공원)</strong> — 6·25전쟁에서 세계 평화를 위해 산화한 유엔군 전몰장병이 잠든 세계 유일의 유엔군 묘지입니다. 21개 참전국 조각가들이 제작한 국제 조각 작품이 전시된 유엔조각공원이 인접해 있습니다.</li>
+          <li><strong>이기대 해안산책로</strong> — 동생말에서 오륙도까지 약 4.6km에 걸쳐 해안 절벽을 따라 구름다리와 데크로 이어진 산책로로, 갈맷길과 해파랑길의 인기 구간입니다. 파식대지와 해식애가 어우러진 국가지질공원 명소입니다.</li>
+          <li><strong>신선대</strong> — 용당동 앞바다에 솟은 명승으로, 신선이 내려와 노닐었다는 전설이 전해 옵니다. 정상에서 부산항과 오륙도, 신선대부두를 한눈에 조망할 수 있습니다.</li>
+          <li><strong>부산국제금융센터(BIFC)</strong> — 문현금융단지의 랜드마크 마천루로 2014년 개장한 지상 63층 초고층 빌딩입니다. 한국거래소, 한국예탁결제원 등 금융 공공기관이 입주한 동남권 금융 중심의 상징입니다.</li>
+        </ul>
+      </section>
+      <section id="r-heritage">
+        <h2>문화유산·문화시설</h2>
+        <ul>
+          <li><strong>부산광역시립박물관</strong> — 대연동 유엔평화문화특구 일원에 자리한 부산의 대표 종합 박물관으로, 부산과 동래 지역의 선사시대부터 근현대까지의 역사·문화 유물을 상설 전시합니다.</li>
+          <li><strong>국립일제강제동원역사관</strong> — 부산항이 강제동원의 주요 출발지였던 역사성을 반영해 대연동에 건립된 국립 역사관으로, 일제강점기 강제동원의 실상을 조사·전시합니다.</li>
+          <li><strong>유엔평화기념관</strong> — 6·25전쟁과 유엔군의 참전, 전후 평화 유지 활동을 기리는 기념관으로, 유엔기념공원과 연계해 평화·추모 교육의 장으로 운영됩니다.</li>
+          <li><strong>문화골목</strong> — 대연동 골목을 문화 공간으로 재생한 복합 문화 명소로, 소극장·갤러리·공연 무대가 어우러져 지역 축제와 예술 행사가 열립니다.</li>
+          <li><strong>오륙도 축제·이기대 달맞이축제</strong> — 남구를 대표하는 지역 축제로, 오륙도와 이기대의 빼어난 해안 경관을 배경으로 봄과 보름에 걸쳐 다양한 문화·공연 행사가 펼쳐집니다.</li>
+        </ul>
+      </section>
+      <section id="r-nature">
+        <h2>자연·휴식</h2>
+        <ul>
+          <li><strong>이기대 도시자연공원</strong> — 용호동 해안을 따라 조성된 자연공원으로, 해안 절벽과 파식대지, 구름다리를 걸으며 남해 바다를 감상할 수 있는 부산의 대표 걷기 명소입니다.</li>
+          <li><strong>신선대 유원지</strong> — 용당동 신선대 일대의 녹지 유원지로, 산책로와 전망 공간을 갖춰 부산항과 오륙도를 조망하며 휴식하기 좋은 곳입니다.</li>
+          <li><strong>용호별빛공원</strong> — 옛 용호만 매립지를 활용해 조성한 해안 공원으로, 야경과 산책로가 어우러져 주민들의 저녁 휴식 공간으로 사랑받습니다.</li>
+          <li><strong>황령산 자락 산책로</strong> — 구의 북서쪽 경계를 이루는 황령산 기슭으로 이어지는 산길로, 도심에서 가까우면서도 숲과 조망을 함께 즐길 수 있는 등산·산책 코스입니다.</li>
+          <li><strong>오륙도 해맞이공원</strong> — 오륙도 스카이워크와 이어지는 해안 전망 공원으로, 동해와 남해가 만나는 지점에서 일출과 탁 트인 바다 절경을 감상할 수 있습니다.</li>
+        </ul>
+      </section>
+      <section id="r-transport">
+        <h2>교통</h2>
+        <p>남구의 대중교통 중심축은 부산 도시철도 2호선으로, 문현역·지게골역·못골역·대연역·경성대·부경대역·부산은행역·국제금융센터·부산은행역이 구를 동서로 관통합니다. 대연역과 경성대·부경대역 일대는 대학가·상권과 맞물려 승객이 가장 붐비는 구간입니다. 문현금융단지에는 국제금융센터·부산은행역이 자리해 금융기관 통근 수요를 뒷받침합니다. 도로 교통으로는 황령산터널과 광안대로, 부산항대교가 인접해 도심·해운대·강서 방면 접근성이 좋으며, 감만·신선대부두로 이어지는 항만 배후도로가 발달해 있습니다. 오륙도·이기대 방면으로는 용호동을 거치는 시내버스 노선이 촘촘히 운행되어 관광객 접근을 돕습니다. 항만 물류 차량과 대학가 통학, 금융단지 통근 수요가 뒤섞인 다층적 교통 흐름이 남구의 특징입니다.</p>
+      </section>
+      <section id="r-symbols">
+        <h2>지역 상징</h2>
+        <ul class="symbols">
+          <li>구화(꽃): 목련</li>
+          <li>구목(나무): 은행나무</li>
+          <li>구조(새): 비둘기</li>
+        </ul>
+      </section>
+      <section id="r-faq">
+        <h2>자주 묻는 질문</h2>
+        <div class="faq">
+          <details>
+            <summary>부산 남구청은 어디에 있나요?</summary>
+            <p>부산광역시 남구 못골로 19(대연동)에 있으며, 도시철도 2호선 못골역 인근에 자리합니다.</p>
+          </details>
+          <details>
+            <summary>오륙도가 동해와 남해의 경계라는 게 사실인가요?</summary>
+            <p>네, 국립해양조사원은 남구 앞바다의 오륙도를 기준으로 우리나라 바다를 동해와 남해로 구분합니다.</p>
+          </details>
+          <details>
+            <summary>유엔기념공원은 어떤 곳인가요?</summary>
+            <p>6·25전쟁에서 산화한 유엔군 전몰장병이 잠든 세계 유일의 유엔군 묘지로, 대연동에 있으며 UN평화문화특구의 핵심 시설입니다.</p>
+          </details>
+          <details>
+            <summary>이기대 해안산책로는 얼마나 긴가요?</summary>
+            <p>동생말에서 오륙도 방면까지 약 4.6km에 이르며, 해안 절벽을 따라 구름다리와 데크로 이어진 갈맷길·해파랑길의 인기 구간입니다.</p>
+          </details>
+          <details>
+            <summary>남구에는 어떤 대학이 있나요?</summary>
+            <p>경성대학교, 부경대학교, 동명대학교가 대연·용당 일대에 자리해 활기찬 대학 문화 거리를 이룹니다.</p>
+          </details>
+          <details>
+            <summary>문현금융단지는 무엇인가요?</summary>
+            <p>문현동 일대에 조성된 동남권 금융 중심지로, 부산국제금융센터(BIFC)를 비롯해 한국은행 부산본부, 부산은행 본점 등이 입주해 있습니다.</p>
+          </details>
+        </div>
+      </section>
+      <section id="r-links">
+        <h2>공식 링크</h2>
+        <ul>
+          <li><a href="https://www.bsnamgu.go.kr/" rel="noopener">부산광역시 남구청 공식 홈페이지</a></li>
+          <li><a href="https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000101007000000" rel="noopener">부산 남구 UN평화문화특구 안내</a></li>
+        </ul>
+      </section>
+      <section id="r-github">
+        <h2>GitHub</h2>
+        <ul>
+          <li><a href="https://github.com/kr-busan-nam" rel="noopener">GitHub 조직: kr-busan-nam</a></li>
+          <li><a href="https://github.com/kr-busan-nam/kr-busan-nam.github.io" rel="noopener">이 사이트 저장소</a></li>
+        </ul>
+      </section>
+      <section id="r-sources">
+        <h2>출처</h2>
+        <ul class="sources">
+          <li><a href="https://ko.wikipedia.org/wiki/%EB%82%A8%EA%B5%AC_(%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C)" rel="noopener">남구 (부산광역시) - 위키백과</a> (조회 2026-07-08)</li>
+          <li><a href="https://www.bsnamgu.go.kr/" rel="noopener">부산 남구청 공식 홈페이지</a> (조회 2026-07-08)</li>
+          <li><a href="https://www.bsnamgu.go.kr/index.namgu?menuCd=DOM_000000101007000000" rel="noopener">부산 남구청 - UN평화문화특구 안내</a> (조회 2026-07-08)</li>
+          <li><a href="https://busan.grandculture.net/Contents/Index?contents_id=GC04214625" rel="noopener">문현 금융 단지 - 부산역사문화대전</a> (조회 2026-07-08)</li>
+          <li><a href="https://www.busan.go.kr/geopark/igidae" rel="noopener">이기대 - 부산지오파크</a> (조회 2026-07-08)</li>
+        </ul>
+      </section>
+    </div>
+  </main>
   <aside class="cg-sponsors" aria-label="후원 파트너 상세">
     <p class="cg-spon-head"><span class="cg-ad">AD</span> 후원 파트너 <small>이 링크는 광고이며 편집상의 추천이 아닙니다 (rel=&quot;sponsored&quot;).</small></p>
     <ul class="cg-spon-grid">
